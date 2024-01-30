@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
-import java.util.List;
 
-@Validated
+@Validated // в классе будет использоваться валидация по аннотациям
 @RestController
-@RequestMapping("/genre")
+@RequestMapping("/genre") // обработка запросов, начинающихся с ./genre
 public class GenreController {
     private final GenreService genreService;
 
@@ -26,57 +25,76 @@ public class GenreController {
         this.genreService = genreService;
     }
 
-    // в теле сообщения
-    // @RequestBody Genre genre {}
-    // @RequestParam String name
-    // @RequestParam int age
-
-    // в строке запроса
-    // /genre?id=3&name=zzz
-    // @RequestParam int id
-    // @RequestParam String name
-    // /genre/id/3/name/zzz
-    // /genre/3
-    // @GetMapping("/id/{idValue}/name/{nameValue}")
-    // @PathVariable int idValue
-    // @PathVariable String nameValue
-    //@PostMapping
-    //@RequestMapping(path = "/add", // /genre
-    //        method = RequestMethod.POST)
-    /*public Genre addGenre(@RequestBody Genre genre){
-
-    }*/
-    @PostMapping// 201 CREATED header Location:
-    public ResponseEntity<Void> addGenre(@RequestBody @Valid Genre genre){
+    // добавление нового жанра в БД
+    // запрос приходит методом POST (@PostMapping)
+    // в теле сообщения приходит json с описанием жанра (@RequestBody Genre genre)
+    // объект должен быть валидными по всем описанным в нем правилам (@Valid Genre genre)
+    @PostMapping
+    public ResponseEntity<Void> addGenre(@RequestBody @Valid Genre genre) {
+        // ResponseEntity для формирования ответа используется,
+        // когда необходимо добавить заголовки или изменить статус ответа
         try {
             String genreUrl = genreService.saveGenre(genre);
             URI location = URI.create("http://127.0.0.1:8080/genre/" + genreUrl);
+
+            // ответ - 201, в заголовках передаётся расположение нового жанра, тело - пустое
             return ResponseEntity.created(location).build();
         } catch (ShopException e) {
-            // import org.springframework.http.HttpStatus;
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            // ответ - 409, в теле передается информация об источнике конфликта
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
-    @PutMapping
-    public Genre update(@RequestBody Genre genre){
-
+    // получение информации по url жанра
+    // запрос приходит методом GET (@GetMapping)
+    // параметры передаются, как часть строки запроса (/{genreUrl} -> @PathVariable String genreUrl)
+    @GetMapping("/{genreUrl}")
+    public Genre getGenreByURL(@PathVariable String genreUrl) {
+        try {
+            // ответ - 200, тело - содержит json строку с описанием найденного жанра
+            return genreService.getGenreByUrl(genreUrl);
+        } catch (ShopException e) {
+            // ответ - 404, в теле передается информация об ошибке
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
-    // /genre/dwef/archive/true
-    // /genre/dwef/archive/false
-    @PatchMapping("/{url}/archive/{value}") // 204
-    public ResponseEntity<Void> archive(@Size(min = 3, max = 10) @PathVariable String url,
-                                        @PathVariable boolean value){
 
-    }
+    // получение информации по всем жанрам
+    // запрос приходит методом GET (@GetMapping)
     @GetMapping
-    public List<Genre> genres(){
-
+    public Iterable<Genre> getAllGenres() {
+        return genreService.getAllGenres();
     }
 
+    // обновление жанра
+    // запрос приходит методом PUT (@PutMapping)
+    // объект должен быть валидными по всем описанным в нем правилам (@Valid Genre genre)
+    @PutMapping
+    public ResponseEntity<Void> update(@RequestBody @Valid Genre genre) {
+        try {
+            genreService.update(genre);
+            // ответ - 204, тело - пустое
+            return ResponseEntity.noContent().build();
+        } catch (ShopException e) {
+            // ответ - 404, в теле передается информация об ошибке
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
-
-
-
-
+    // обновление жанра
+    // запрос приходит методом PATCH (@PatchMapping)
+    // параметры передаются, как часть строки запроса
+    //      (/{url}/archive/{value} -> @PathVariable String url и @PathVariable boolean value)
+    @PatchMapping("/{url}/archive/{value}")
+    public ResponseEntity<Void> archive(@Size(min = 3, max = 10) @PathVariable String url,
+                                        @PathVariable boolean value) {
+        try {
+            genreService.archive(url, value);
+            // ответ - 204, тело - пустое
+            return ResponseEntity.noContent().build();
+        } catch (ShopException e) {
+            // ответ - 404, в теле передается информация об ошибке
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 }
