@@ -1,7 +1,6 @@
 package com.itmo.springproject01.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itmo.springproject01.entity.Genre;
 import com.itmo.springproject01.entity.Picture;
 import com.itmo.springproject01.helper.PictureParamEditor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ public class PictureController {
         this.objectMapper = objectMapper;
     }
 
+    // picture: {"pictureName": "Название", "description": "Описание", "createdAt":"01-01-2024"}
     // @RequestParam + Jackson
     /*
     @PostMapping // picture: {"name": "Название", "description": ""}
@@ -27,7 +27,7 @@ public class PictureController {
         Picture picture = objectMapper.readValue(pictureString, Picture.class);
     }
     */
-    @PostMapping // picture: {"name": "Название", "description": ""}
+    @PostMapping
     public ResponseEntity<Void> addPicture(@RequestParam Picture picture){
 
     }

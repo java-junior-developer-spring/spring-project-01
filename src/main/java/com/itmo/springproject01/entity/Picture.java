@@ -1,5 +1,6 @@
 package com.itmo.springproject01.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // PK
+    @JsonProperty("pictureName")
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
