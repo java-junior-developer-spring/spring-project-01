@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Profile("!default") // бин будет создан для любых профилей, кроме default
 @Service
-@ConfigurationProperties(prefix = "inject")
+@ConfigurationProperties(prefix = "inject") // см. properties файл
 public class ServiceToInject {
-    @Value("${service.title}")
+    @Value("${service.title}") // см. properties файл
     private String titleFromProperties;
-    @Value("${service.number}")
+    @Value("${service.number}") // см. properties файл
     private int numberFromProperties;
-    private String fromPropertiesByName;
+    private String fromPropertiesByName; // см. properties файл
     private Runnable runnable;
 
 
