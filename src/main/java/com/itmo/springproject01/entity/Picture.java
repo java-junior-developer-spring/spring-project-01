@@ -18,6 +18,8 @@ public class Picture {
     private LocalDate createdAt;
     @Column(nullable = false)
     private boolean inArchive;
+
+    private String imagePath;
     @ManyToOne
     @JoinColumn(nullable = false) // для описания столбца внешнего ключа
     private Genre genre;
@@ -28,6 +30,14 @@ public class Picture {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getName() {
