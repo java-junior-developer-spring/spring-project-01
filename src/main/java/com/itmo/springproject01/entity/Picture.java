@@ -1,6 +1,8 @@
 package com.itmo.springproject01.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -16,6 +18,7 @@ public class Picture {
     private String name;
     @Column(nullable = false)
     private String description;
+    @JsonSerialize(using = LocalDateSerializer.class)
     @Column(nullable = false, updatable = false)
     private LocalDate createdAt;
     @Column(nullable = false)

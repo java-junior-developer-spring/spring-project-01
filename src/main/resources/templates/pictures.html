@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${pictures !=null and !pictures.isEmpty()}">
+    <div th:each="picture : ${pictures}">
+        <h2 th:text="${picture.name}"></h2>
+        <a th:href="@{/picture/{id}(id=${picture.id})}">Подробнее</a>
+    </div>
+</div>
+<div th:if="${pictures == null or pictures.isEmpty()}">
+    <h2>Картины пока не нарисованы</h2>
+</div>
+
+</body>
+</html>

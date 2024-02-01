@@ -1,6 +1,8 @@
 package com.itmo.springproject01.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -18,10 +20,13 @@ public class Genre {
     @Size(min = 3, max = 100)
     @Column(nullable = false)
     private String name;
+    
     @NotNull
     @Column(nullable = false)
     private String description;
+
     @Column(nullable = false, updatable = false)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate createdAt;
     @Column(name = "in_archive", nullable = false)
     private boolean inArchive;
