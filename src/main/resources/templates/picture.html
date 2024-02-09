@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<!-- в тег div будет добавлен фрагмент menu из файла fragments.htm,
+    в фрагмент передаётся список жанров из контроллера -->
 <div th:insert="~{fragments.html :: menu(${genres})}"></div>
 
 <div>
@@ -16,6 +18,7 @@
     </div>
 </div>
 
+<!-- тег div будет заменен на фрагмент menu из файла fragments.htm -->
 <div th:replace="~{fragments.html :: footer}"></div>
 </body>
 </html>
