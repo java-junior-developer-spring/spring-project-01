@@ -1,0 +1,12 @@
+<!-- фрагмент можно переиспользовать по имени menu -->
+<nav th:fragment="menu(genres)">
+    <a th:each="genre : ${genres}"
+       th:text="${genre.name}"
+       th:href="@{/picture/genre/{genreUrl}(genreUrl=${genre.url})}"></a>
+</nav>
+
+
+<!-- фрагмент можно переиспользовать по имени footer -->
+<footer th:fragment="footer">
+    Подвал Сайта
+</footer>

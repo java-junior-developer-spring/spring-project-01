@@ -5,8 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<div th:if="${pictures !=null and !pictures.isEmpty()}">
+<div th:insert="~{fragments.html :: menu(${genres})}"></div>
+
+<div th:if="${pictures !=null and !pictures.isEmpty()}" >
     <div th:each="picture : ${pictures}">
+        <!-- Picture -> name -> getName() -->
         <h2 th:text="${picture.name}"></h2>
         <a th:href="@{/picture/{id}(id=${picture.id})}">Подробнее</a>
     </div>
