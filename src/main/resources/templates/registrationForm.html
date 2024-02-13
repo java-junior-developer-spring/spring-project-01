@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--<head>
+<head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>-->
-<head th:fragment="headerfiles">
+</head>
+
 <body>
 
 <form action="#" th:action="@{/account/registration}" th:object="${user}" method="post">
     <div>
         <label for="name">Имя пользователя</label>
+
         <input type="text" th:field="*{username}" id="name" placeholder="Имя пользователя">
+
+
         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
     </div>
     <div>
@@ -23,6 +26,10 @@
         <input type="text" th:field="*{email}" id="email" placeholder="Email">
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
     </div>
+
+<!--    <div>
+        <input type="file" name="image" accept="image/jpeg">
+    </div>-->
     <input type="submit" value="Регистрация">
 </form>
 

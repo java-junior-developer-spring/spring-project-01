@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,6 +30,8 @@ public class GenreController {
     // запрос приходит методом POST (@PostMapping)
     // в теле сообщения приходит json с описанием жанра (@RequestBody Genre genre)
     // объект должен быть валидными по всем описанным в нем правилам (@Valid Genre genre)
+    // /genre
+    @Secured("ROLE_ADMIN") // {"ROLE_ADMIN", "ROLE_USER"}
     @PostMapping
     public ResponseEntity<Void> addGenre(@RequestBody @Valid Genre genre) {
         // ResponseEntity для формирования ответа используется,
