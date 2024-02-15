@@ -1,4 +1,4 @@
-package com.itmo.springproject01.service;
+package com.itmo.springproject01.info.queries;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,7 +22,11 @@ public class TestJdbcTemplate {
 
     public void examples(){
         Тип result = jdbcTemplate.queryForObject("", Тип.class);
-        jdbcTemplate.update("INSERT INTO ИМЯ_ТАБЛИЦЫ VALUES (?, ?, ?, ?)", значения параметров);
+        jdbcTemplate
+                .update("INSERT INTO ИМЯ_ТАБЛИЦЫ VALUES (?, ?, ?, ?)", 2, 4, 6, 7);
+
+        namedParameterJdbcTemplate
+                .update("INSERT INTO ИМЯ_ТАБЛИЦЫ VALUES (:par01, :par02, :par03, :par04)", значения параметров);
 
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("имя_параметра", значение);
         Тип result namedParameterJdbcTemplate.queryForObject("SELECT столбцы FROM ИМЯ_ТАБЛИЦЫ WHERE столбец = :имя_параметра", namedParameters, Тип.class);

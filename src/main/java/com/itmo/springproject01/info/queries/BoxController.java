@@ -40,6 +40,6 @@ public class BoxController {
 
     @PatchMapping("/03")
     public void get03(int maxHeight, int newWidth){
-
+        // boxRepository.findAll(BoxSpecifications.spec01(10, 23, 44));
     }
 }
