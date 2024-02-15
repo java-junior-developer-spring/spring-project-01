@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p sec:authentication="name"></p>
+<p sec:authentication="principal.authorities"></p>
+
+<p sec:authorize="hasRole('USER')"></p>
+<p sec:authorize="hasRole('ADMIN')"></p>
+<p sec:authorize="isAuthenticated()"></p>
+
+
+</body>
+</html>

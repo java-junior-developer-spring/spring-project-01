@@ -40,18 +40,18 @@ public class SpringSecurityConfiguration {
                         .hasRole("USER") // .hasAnyRole("ADMIN" , "MODERATOR")
                         // .hasAuthority("") .hasAnyAuthority()
                         .anyRequest()
-                        .authenticated())
+                        .authenticated()) // /account/login         /login
                 .formLogin(form -> form
-                        .usernameParameter("username") // значение атрибута name в html форме
-                        .passwordParameter("password") // значение атрибута name в html форме
+                        .usernameParameter("user_name") // значение атрибута name в html форме
+                        .passwordParameter("user_password") // значение атрибута name в html форме
                         .loginPage("/account/login") // форма доступна по адресу
                         .loginProcessingUrl("/account/login") // обработчик, значение атрибута action тега form
                         .failureUrl("/account/login?failed") // ошибка авторизации
                         .defaultSuccessUrl("/account") // перенаправление после успешной авторизации
                         .permitAll())
-                .logout(logout -> logout.logoutUrl("/account/logout")
+                .logout(logout -> logout.logoutUrl("/account/logout") // <a th:href="@{/account/logout}">Выйти</a>
                         .logoutSuccessUrl("/account/login") // перенаправление после /account/logout
-                        .permitAll())
+                        .permitAll())  // [ВЫЙТИ] /account/logout
                 .build();
     }
 

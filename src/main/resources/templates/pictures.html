@@ -15,7 +15,9 @@
         <h2 th:text="${picture.name}"></h2>
         <a th:href="@{/picture/{id}(id=${picture.id})}">Подробнее</a>
     </div>
+
 </div>
+
 <div th:if="${pictures == null or pictures.isEmpty()}">
     <h2>Картины пока не нарисованы</h2>
 </div>

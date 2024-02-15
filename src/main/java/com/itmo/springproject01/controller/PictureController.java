@@ -125,4 +125,22 @@ public class PictureController {
         webDataBinder.registerCustomEditor(Picture.class, new PictureParamEditor(objectMapper));
     }
 
+    /*
+    @GetMapping("/void01")
+    public String void01(*//*@RequestParam String key, @RequestParam String key1*//*){
+        return "void01"; // void01.html
+    }
+
+    // <p th:text="${param.key}"></p> value
+    // <p th:text="${param.key1}"></p> value1
+
+    @GetMapping("/void02")
+    public String void02(){
+        return "redirect:picture/void01?key=value&key1=value1";
+        return "redirect:picture/void01?failed";
+    }
+    */
+
+
+
 }

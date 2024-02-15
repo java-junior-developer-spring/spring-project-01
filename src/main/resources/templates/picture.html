@@ -16,6 +16,12 @@
     <div>
         <img th:src="@{/images/{path}(path=${pictureInfo.imagePath})}">
     </div>
+    <div sec:authorize="isAuthenticated()">
+        <form name="comment">
+            <textarea></textarea>
+            <input type="submit" value="Добавить комментарий">
+        </form>
+    </div>
 </div>
 
 <!-- тег div будет заменен на фрагмент footer из файла fragments.htm -->

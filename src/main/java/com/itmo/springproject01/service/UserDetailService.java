@@ -40,7 +40,7 @@ public class UserDetailService implements UserDetailsService {
         );
         // UserDetails
         // User
-        // User implements UserDetails
+        // CustomUser implements UserDetails
         return new org.springframework.security.core.userdetails.User(
                 username, user.getPassword(), Set.of(authority)
         );
