@@ -1,36 +1,64 @@
 package com.itmo.springproject01.configuration;
 
+import com.itmo.springproject01.service.JwtAuthenticationFilter;
 import com.itmo.springproject01.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true) // boolean securedEnabled() default false;
 public class SpringSecurityConfiguration {
     private UserDetailService userDetailService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    public SpringSecurityConfiguration(UserDetailService userDetailService) {
+    public SpringSecurityConfiguration(UserDetailService userDetailService, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.userDetailService = userDetailService;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
+    // /api/admin - jwt
+    // /account - form
+    @Bean
+    @Order(1) // SecurityFilterChain
+    public SecurityFilterChain filterChainAdmin(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+                .securityMatcher("/api/admin/**")
+                .authenticationProvider()
+                .authorizeHttpRequests((authorize) -> authorize
+                        //.dispatcherTypeMatchers(FORWARD, ERROR).permitAll()
+                        .requestMatchers().permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 
     // org.springframework.security.config.annotation.web.configurers;
     @Bean
+    @Order(2)
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .securityMatcher("/account/**")
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/account/registration", "/account/login")
@@ -65,5 +93,16 @@ public class SpringSecurityConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration
+                                                                   config)  {
+        try {
+            return config.getAuthenticationManager();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

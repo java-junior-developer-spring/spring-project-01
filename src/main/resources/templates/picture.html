@@ -18,7 +18,8 @@
     </div>
     <div sec:authorize="isAuthenticated()">
         <form name="comment">
-            <textarea></textarea>
+            <span id="error"></span>
+            <textarea name="text"></textarea>
             <input type="submit" value="Добавить комментарий">
         </form>
     </div>
@@ -26,5 +27,7 @@
 
 <!-- тег div будет заменен на фрагмент footer из файла fragments.htm -->
 <div th:replace="~{fragments.html :: footer}"></div>
+
+<script src="@{/js/picture.js}"></script>
 </body>
 </html>
