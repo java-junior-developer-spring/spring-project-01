@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление задачи</title>
+</head>
+<body>
+
+<form name="add-task">
+
+    <span id="result-info"></span>
+
+    <fieldset>
+        <label>Задача <input type="text" name="title"></label>
+    </fieldset>
+
+    <fieldset>
+        <label>Завершить к <input type="datetime-local" name="closeTo"></label>
+    </fieldset>
+
+    <fieldset id="participants">
+        <button name="add-participant" type="button">Добавить участника</button>
+    </fieldset>
+
+    <fieldset>
+        <label>Прикрепить файл <input type="file" name="doc"></label>
+    </fieldset>
+
+    <div>
+        <button type="submit">Добавить задачу</button>
+    </div>
+</form>
+
+<script th:src="@{/info/task/add-task-ajax.js}"></script>
+</body>
+</html>

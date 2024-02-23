@@ -36,7 +36,7 @@ public class SpringSecurityConfiguration {
 
     // /api/admin - jwt
     // /account - form
-    @Bean
+    /*@Bean
     @Order(1) // SecurityFilterChain
     public SecurityFilterChain filterChainAdmin(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
@@ -51,17 +51,17 @@ public class SpringSecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
-    }
+    }*/
 
     // org.springframework.security.config.annotation.web.configurers;
     @Bean
     @Order(2)
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .securityMatcher("/account/**")
+                .securityMatcher("/account/**", "/front/**")
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/account/registration", "/account/login")
+                        .requestMatchers("/account/registration", "/account/login", "/front/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/picture")
                         // .requestMatchers(HttpMethod.GET)

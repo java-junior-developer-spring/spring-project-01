@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление задачи</title>
+</head>
+<body>
+
+<form th:action="@{/front/addtask/reload}"
+      th:object="${task}"
+      method="post"
+      enctype="multipart/form-data"> <!-- так как будет осуществляться передача файла -->
+
+    <span id="error"></span>
+    <p th:if="${param.load_error}">Ошибка загрузки файла</p>
+
+    <fieldset>
+        <label>Задача <input type="text" th:field="*{title}"></label>
+    </fieldset>
+
+    <fieldset>
+        <label>Завершить к <input type="datetime-local" th:field="*{closeTo}"></label>
+    </fieldset>
+
+    <fieldset id="participants">
+        <button name="add-participant" type="button">Добавить участника</button>
+    </fieldset>
+
+    <fieldset>
+        <label>Прикрепить файл <input type="file" name="doc"></label>
+    </fieldset>
+
+    <div>
+        <button type="submit">Добавить задачу</button>
+    </div>
+</form>
+
+<script th:src="@{/info/task/add-task-reload.js}"></script>
+</body>
+</html>
