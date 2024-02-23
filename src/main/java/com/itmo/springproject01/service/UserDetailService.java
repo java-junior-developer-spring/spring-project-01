@@ -1,10 +1,11 @@
 package com.itmo.springproject01.service;
 
-import com.itmo.springproject01.entity.User;
-import com.itmo.springproject01.repository.UserRepository;
+import com.itmo.springproject01.entity.CustomUser;
+import com.itmo.springproject01.repository.CustomUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,19 +15,19 @@ import java.util.Set;
 
 @Service
 public class UserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final CustomUserRepository customUserRepository;
 
     @Autowired
-    public UserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailService(CustomUserRepository customUserRepository) {
+        this.customUserRepository = customUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        // import com.itmo.springproject01.entity.User;
-        User user = userRepository.findByUsername(username) // T get();
-                .orElseThrow(()->new UsernameNotFoundException("User not found"));
+        // import com.itmo.springproject01.entity.CustomUser;
+        CustomUser user = customUserRepository.findByUsername(username) // T get();
+                .orElseThrow(()->new UsernameNotFoundException("CustomUser not found"));
 
         /*
         List<GrantedAuthority> roles = user.getRoles()
@@ -39,10 +40,8 @@ public class UserDetailService implements UserDetailsService {
                 user.getRole().getRoleType().name()
         );
         // UserDetails
-        // User
+        // CustomUser
         // CustomUser implements UserDetails
-        return new org.springframework.security.core.userdetails.User(
-                username, user.getPassword(), Set.of(authority)
-        );
+        return new User(username, user.getPassword(), Set.of(authority));
     }
 }

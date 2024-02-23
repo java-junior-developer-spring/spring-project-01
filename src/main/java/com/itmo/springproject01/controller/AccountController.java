@@ -1,20 +1,12 @@
 package com.itmo.springproject01.controller;
 
-import com.itmo.springproject01.entity.User;
-import jakarta.servlet.http.HttpServletRequest;
+import com.itmo.springproject01.entity.CustomUser;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.security.Principal;
 
 
 @Controller
@@ -28,7 +20,7 @@ public class AccountController {
     */
 
     @GetMapping("/registration")
-    public String getRegistrationForm(User user){
+    public String getRegistrationForm(CustomUser user){
         return "registrationForm";
     }
 
@@ -45,7 +37,7 @@ public class AccountController {
     <input type="text" th:field="*{username}">
     <input type="password" th:field="*{password}">*/
     @PostMapping("/registration")
-    public String addNewUser(@Valid User user, BindingResult bindingResult){
+    public String addNewUser(@Valid CustomUser user, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return "registrationForm";
         System.out.println(user.getUsername());
         return "redirect:account/login";
@@ -69,8 +61,8 @@ public class AccountController {
         /*Authentication authentication = SecurityContextHolder
                 .getContext().getAuthentication();*/
         /*UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        org.springframework.security.core.userdetails.User user =
-                (org.springframework.security.core.userdetails.User)
+        org.springframework.security.core.userdetails.CustomUser user =
+                (org.springframework.security.core.userdetails.CustomUser)
                         authentication.getPrincipal();*/
         // CustomUser customUser = (CustomUser) authentication.getPrincipal();
         // CustomUser customUser = (CustomUser) userDetails;

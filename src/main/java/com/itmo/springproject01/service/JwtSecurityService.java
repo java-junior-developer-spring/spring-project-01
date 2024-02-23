@@ -1,6 +1,6 @@
 package com.itmo.springproject01.service;
 
-import com.itmo.springproject01.entity.User;
+import com.itmo.springproject01.entity.CustomUser;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.DirectEncrypter;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
@@ -62,7 +62,7 @@ public class JwtSecurityService {
 //        jweObject.encrypt((JWEEncrypter) webApplicationContext.getBean("JWEEncrypter"));
     }
 
-    public String generateToken(User user) throws JOSEException {
+    public String generateToken(CustomUser user) throws JOSEException {
         JWEObject jweObject = new JWEObject(
                 getHeader(),
                 getPayload(

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_users")
 // @Table(name = "`user`")
-public class User {
+public class CustomUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
