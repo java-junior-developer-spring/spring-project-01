@@ -3,11 +3,10 @@ package com.itmo.springproject01.controller;
 import com.itmo.springproject01.exception.ShopException;
 import com.itmo.springproject01.service.AdminAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -22,9 +21,8 @@ public class AdminAccountController {
 
     @PostMapping("/authorize")
     public String authorize(@RequestParam String login,
-                          @RequestParam String password){
+                            @RequestParam String password) {
         try {
-            // { token: "vvnouqiehcgqvgmqgughqmg" }
             return adminAccountService.authorize(login, password);
         } catch (ShopException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

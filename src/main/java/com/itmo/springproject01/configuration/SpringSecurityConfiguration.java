@@ -58,13 +58,13 @@ public class SpringSecurityConfiguration {
     @Order(2)
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .securityMatcher("/account/**", "/front/**")
+                .securityMatcher("/account/**", "/front/**", "/picture/**")
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/account/registration", "/account/login", "/front/**")
+                        .requestMatchers("/account/registration", "/account/login", "/front/**", "/picture/**")
                         .permitAll()
-                        .requestMatchers(HttpMethod.GET, "/picture")
-                        // .requestMatchers(HttpMethod.GET)
+                        .requestMatchers(HttpMethod.GET, "/account")
+//                         .requestMatchers(HttpMethod.GET)
                         .hasRole("USER") // .hasAnyRole("ADMIN" , "MODERATOR")
                         // .hasAuthority("") .hasAnyAuthority()
                         .anyRequest()

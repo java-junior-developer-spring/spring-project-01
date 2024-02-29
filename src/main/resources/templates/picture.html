@@ -16,18 +16,33 @@
     <div>
         <img th:src="@{/images/{path}(path=${pictureInfo.imagePath})}">
     </div>
-    <div sec:authorize="isAuthenticated()">
+    <button th:attr="data-picture-id=${pictureInfo.id}" name="add-to-order" type="button">
+        Добавить в заказ
+    </button>
+    <button th:attr="data-picture-id=${pictureInfo.id}"
+            style="display: none"
+            name="remove-from-order"
+            type="button">
+        Удалить из заказа
+    </button>
+
+
+    <!-- localstorage -->
+
+
+    <!--<div sec:authorize="isAuthenticated()">
         <form name="comment">
             <span id="error"></span>
             <textarea name="text"></textarea>
             <input type="submit" value="Добавить комментарий">
         </form>
-    </div>
+    </div>-->
 </div>
 
 <!-- тег div будет заменен на фрагмент footer из файла fragments.htm -->
 <div th:replace="~{fragments.html :: footer}"></div>
 
-<script src="@{/js/picture.js}"></script>
+<!--<script th:src="@{js/picture.js}"></script>-->
+<script th:src="@{/js/add-to-order.js}"></script>
 </body>
 </html>

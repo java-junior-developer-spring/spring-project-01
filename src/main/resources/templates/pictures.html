@@ -14,6 +14,16 @@
         <!-- Picture -> name -> getName() -->
         <h2 th:text="${picture.name}"></h2>
         <a th:href="@{/picture/{id}(id=${picture.id})}">Подробнее</a>
+        <!-- <p data-picture-id="546"></p> -->
+        <button th:attr="data-picture-id=${picture.id}" name="add-to-order" type="button">
+            Добавить в заказ
+        </button>
+        <button th:attr="data-picture-id=${picture.id}"
+                style="display: none"
+                name="remove-from-order"
+                type="button">
+            Удалить из заказа
+        </button>
     </div>
 
 </div>
@@ -23,5 +33,7 @@
 </div>
 <!-- тег div будет заменен на фрагмент menu из файла fragments.htm -->
 <div th:replace="~{fragments.html :: footer}"></div>
+
+<script th:src="@{/js/add-to-order.js}"></script>
 </body>
 </html>

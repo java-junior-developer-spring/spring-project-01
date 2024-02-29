@@ -16,7 +16,7 @@ public class CustomUser {
     @Size(min = 5, max = 10)
     private String username;
     @NotNull
-    @Size(min = 6, max = 20)
+    @Size(min = 6)
     private String password;
     @Email
     private String email;
