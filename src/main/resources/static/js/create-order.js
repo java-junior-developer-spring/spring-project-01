@@ -6,6 +6,18 @@ if (!ids || ids.length < 3) ids = [];
 else ids = JSON.parse(ids);
 
 addToOrderButton.forEach(button => {
+    const pictureId = button.dataset.pictureId;
+    if (ids.length === 0 || ids.indexOf(pictureId) < 0) {
+        button.style.display = "block";
+        button.nextElementSibling.style.display = "none";
+        return;
+    }
+    button.style.display = "none";
+    button.nextElementSibling.style.display = "block";
+});
+
+
+addToOrderButton.forEach(button => {
     button.addEventListener("click", ()=>{
         const pictureId = button.dataset.pictureId;
         if (ids.indexOf(pictureId) < 0) {
